@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> โปรแกรมการสื่อสาร Visual image</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <!-- <script src='https://code.responsivevoice.org/responsivevoice.js'></script> -->
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=yyTCzcvE"></script>
+
+    <style>
+        
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: "IBM Plex Sans Thai", sans-serif;
+            font-weight: 500;
+            font-style: normal;
+        }
+        .top-menu {
+            width: 100%;
+            height: 60px;
+            background-color: #007BFF;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            z-index: 1;
+            animation: slideDown 0.5s ease-in-out;
+        }
+        @keyframes slideDown {
+            from { top: -60px; }
+            to { top: 0; }
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-top: 60px;
+            position: relative;
+        }
+        .container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .bottom-nav {
+            width: 100%;
+            height: 60px;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            bottom: 0;
+            z-index: 1;
+            animation: slideUp 0.5s ease-in-out;
+        }
+        @keyframes slideUp {
+            from { bottom: -60px; }
+            to { bottom: 0; }
+        }
+        .bottom-nav a {
+            text-decoration: none;
+            color: #000;
+            font-size: 14px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: color 0.3s ease-in-out;
+        }
+        .bottom-nav a:hover {
+            color: #007BFF;
+        }
+        .bottom-nav a img {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 4px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .bottom-nav a:hover img {
+            transform: scale(1.2);
+        }
+
+
+        .modal-header {
+            background-color: #007BFF;
+            color: white;
+        }
+        .image-menu {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 10px;
+        }
+        .image-menu img {
+            width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .image-menu img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .image-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .step-image {
+            width: 100%;
+            max-width: 500px;
+            /* margin: 20px auto; */
+            cursor: pointer;
+        }
+
+        .step-container {
+            display: none;
+            text-align: center;
+        }
+
+        .carousel-inner img {
+            margin: auto;
+        }
+
+    </style>
+</head>
+<body>
+    <audio id="Audio"> </audio>
+    <div class="top-menu " >
+       โปรแกรมการสื่อสาร Visual  <i class="fa fa-image mx-2"> </i> image
+    </div>
+    <div class="container">
+        <a type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <img src="cover/1.png" alt="Visual Image">
+        </a>
+    </div>
+    <div class="bottom-nav">
+        <a type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#Explanation" style="color: #ffffff;">
+            <i class="fa fa-flag"></i>
+            <span>คำชี้แจง</span>
+        </a>
+        <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: #ffffff;">
+            <i class="fa fa-image"></i>
+            <span>สื่อสาร Visual image</span>
+        </a>
+        <a type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#satisfaction" style="color: #ffffff;">
+            <i class="fa fa-flag"></i>
+            <span>ความพึงพอใจ</span>
+        </a>
+    </div>
+
+
+    <!-- Modal -->
+<div class="modal fade" id="Explanation" tabindex="-1" aria-labelledby="ExplanationLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header bg-success">
+        <h1 class="modal-title fs-5" id="ExplanationLabel">คำชี้แจง</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <img src="cover/2.png" class="d-block w-100" alt="คำชี้แจง">
+    </div>
+    </div>
+</div>
+</div>
+
+
+<div class="modal fade" id="satisfaction" tabindex="-1" aria-labelledby="satisfactionLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header bg-success">
+            <h1 class="modal-title fs-5" id="satisfactionLabel">ประเมินความพึงพอใจ</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <h3>ประเมินความพึงพอใจ
+                จากการเรียนของผู้เรียนหลังจากการเรียนรู้โดยการใช้โปรแกรมการสื่อสาร Visual image
+            </h3>
+            <img src="cover/7.png" class="w-100" alt="คำชี้แจง">
+            <div class="alert alert-danger" role="alert">
+                **** หมายเหตุ    แบบประเมินความพึงพอใจนี้จะปรากฎหลังการเรียนรู้ในกิจกรรมต่างๆในการวัดระดับความรู้สึกของผู้เรียนที่แสดงออกด้วยความรู้สึกชอบ ประทับใจ หรือไม่ชอบที่มีต่อการเรียนรู้จากโปรแกรมการสื่อสาร Visual image
+              </div>
+              <a href="https://forms.gle/PjNLkV1JMqzDFrBLA">
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="button" >ทำแบบประเมิน</button>
+            </div>
+        </a>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    
+
+ <!-- Carousel Modal -->
+ <div class="modal fade" id="carouselModal" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carouselModalLabel">ขั้นตอนการอาบน้ำ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="carouselExample" class="carousel slide">
+                    <div class="carousel-inner" id="bathing">
+                        <div class="carousel-item active">
+                            <img src="cover/bathing/1.png" class="d-block w-100" alt="ขั้นตอนการอาบน้ำ">
+                        </div>
+                        <div class="carousel-item ">
+                            <img src="cover/bathing/2.png" class="d-block w-100" alt="เปิดฟักบัว">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="cover/bathing/3.png" class="d-block w-100" alt="ราดน้ำใส่ตัวให้เปียก">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="cover/bathing/4.png" class="d-block w-100" alt="ปิดฟักบัว">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="cover/bathing/5.png" class="d-block w-100" alt="กดสบู่ลงฝ่ามือ">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/success.gif" class="d-block w-100" alt="เสร็จกิจกรรมแล้ว">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Carousel Modal -->
+<div class="modal fade" id="teeth" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carouselModalLabel">ขั้นตอนการแปรงฟัน</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="teethExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item sound_teeth active">
+                            <img src="cover/teeth/1.png" class="d-block w-100" alt="ขั้นตอนการแปรงฟัน">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/2.png" class="d-block w-100" alt="แปรงสีฟัน ยาสีฟัน">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/3.png" class="d-block w-100" alt="หยิบแปรงสีฟัน">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/4.png" class="d-block w-100" alt="เปิดก๊อกน้ำ">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/5.png" class="d-block w-100" alt="ล้างแปรงสีฟัน">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/6.png" class="d-block w-100" alt="บีบยาสีฟัน">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/7.png" class="d-block w-100" alt="แปรงฟันด้านบน">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/8.png" class="d-block w-100" alt="แปรงฟันด้านล่าง">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/9.png" class="d-block w-100" alt="แปรงฟันด้านขวา">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/10.png" class="d-block w-100" alt="แปรงฟันด้านซ้าย">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/11.png" class="d-block w-100" alt="แปรงลิ้น">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/12.png" class="d-block w-100" alt="บ้วนยาสีฟัน">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/13.png" class="d-block w-100" alt="กลั้วปากด้วยน้ำ">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/14.png" class="d-block w-100" alt="บ้วนน้ำทิ้ง">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/15.png" class="d-block w-100" alt="ล้างแปรงสีฟัน">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/16.png" class="d-block w-100" alt="ปิดก๊อกน้ำ">
+                        </div>
+                        <div class="carousel-item sound_teeth">
+                            <img src="cover/teeth/17.png" class="d-block w-100" alt="เช็คหน้า">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/success.gif" class="d-block w-100" alt="เสร็จกิจกรรมแล้ว">
+                        </div>
+
+                 </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#teethExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#teethExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Carousel Modal -->
+<div class="modal fade" id="hands" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carouselModalLabel">ขั้นตอนการล้างมือ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="handsExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item sound_hands active">
+                            <img src="cover/hands/1.png" class="d-block w-100" alt="ขั้นตอนการล้างมือ">
+                        </div>
+                        <div class="carousel-item sound_hands ">
+                            <img src="cover/hands/2.png" class="d-block w-100" alt="เปิดน้ำและทำให้มือเปียก">
+                        </div>
+                        <div class="carousel-item sound_hands">
+                            <img src="cover/hands/3.png" class="d-block w-100" alt="ปิดก๊อกน้ำ">
+                        </div>
+                        <div class="carousel-item sound_hands">
+                            <img src="cover/hands/4.png" class="d-block w-100" alt="กดสบู่ลงบนฝ่ามือ">
+                        </div>
+                        <div class="carousel-item sound_hands">
+                            <img src="cover/hands/5.png" class="d-block w-100" alt="ถูฝ่ามือ">
+                        </div>
+                        <div class="carousel-item sound_hands">
+                            <img src="cover/hands/12.png" class="d-block w-100" alt="ล้างมือด้วยน้ำสะอาด">
+                        </div>
+                        <div class="carousel-item sound_hands">
+                            <img src="cover/hands/13.png" class="d-block w-100" alt="ปิดก๊อกน้ำ">
+                        </div>
+                        <div class="carousel-item sound_hands">
+                            <img src="cover/hands/14.png" class="d-block w-100" alt="เช็ดมือ">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/success.gif" class="d-block w-100" alt="เสร็จกิจกรรมแล้ว">
+                        </div>
+                        
+                 </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#handsExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#handsExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Carousel Modal -->
+<div class="modal fade" id="face" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carouselModalLabel">ขั้นตอนการล้างหน้า</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="faceExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item sound_face active">
+                            <img src="cover/face/1.png" class="d-block w-100" alt="ขั้นตอนการล้างหน้า">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/2.png" class="d-block w-100" alt="เปิดก๊อกน้ำ">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/3.png" class="d-block w-100" alt="มือรองน้ำ">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/4.png" class="d-block w-100" alt="ใช้มือรองน้ำลูบที่ใบหน้าให้เปียก">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/5.png" class="d-block w-100" alt="ปิดก๊อกน้ำ">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/6.png" class="d-block w-100" alt="หยิบโฟมล้างหน้า">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/7.png" class="d-block w-100" alt="บีบโฟมลงฝ่ามือ">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/8.png" class="d-block w-100" alt="ถูโฟมให้ทั่วใบหน้า">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/9.png" class="d-block w-100" alt="เปิดก๊อกน้ำ">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/10.png" class="d-block w-100" alt="ใช้น้ำล้างโฟมที่หน้าให้สะอาด">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/11.png" class="d-block w-100" alt="ปิดก๊อกน้ำ">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/12.png" class="d-block w-100" alt="หยิบผ้า">
+                        </div>
+                        <div class="carousel-item sound_face">
+                            <img src="cover/face/13.png" class="d-block w-100" alt="เช็ดหน้าให้แห้ง">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/success.gif" class="d-block w-100" alt="เสร็จกิจกรรมแล้ว">
+                        </div>
+                 </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#faceExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#faceExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- การถ่ายปัสสาวะ -->
+<div class="modal fade" id="urination" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carouselModalLabel">ขั้นตอนการถ่ายปัสสาวะ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="urinationExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item sound_urination active">
+                            <img src="cover/การถ่ายปัสสาวะ/1.png" class="d-block w-100" alt="ขั้นตอนการถ่ายปัสสาวะ">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/2.png" class="d-block w-100" alt="เปิดฝาโถชักโครก">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/3.png" class="d-block w-100" alt="ถอดกางเกงชั้นนอก">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/4.png" class="d-block w-100" alt="ถอดกางเกงชั้นใน">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/5.png" class="d-block w-100" alt="ผู้หญิงเตรียมนั่งโถชักโครก">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/6.png" class="d-block w-100" alt="ผู้หญิงนั่งโถชักโครก">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/7.png" class="d-block w-100" alt="ผู้ชายเตรียมยืนหันหน้าให้โถชักโครก">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/8.png" class="d-block w-100" alt="ผู้ชายปัสสาวะลงในโถชักโครก">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/9.png" class="d-block w-100" alt="สวมกางเกงชั้นใน">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/10.png" class="d-block w-100" alt="สวมกางเกงชั้นนอก">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/11.png" class="d-block w-100" alt="กดชักโครก">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/12.png" class="d-block w-100" alt="ปิดฝาโถชักโครก">
+                        </div>
+                        <div class="carousel-item sound_urination">
+                            <img src="cover/การถ่ายปัสสาวะ/13.png" class="d-block w-100" alt="ล้างมือให้สะอาด">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/success.gif" class="d-block w-100" alt="เสร็จกิจกรรมแล้ว">
+                        </div>
+                 </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#urinationExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#urinationExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- การถ่ายอุจาระ -->
+<div class="modal fade" id="defecation" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carouselModalLabel">ขั้นตอนการถ่ายอุจาระ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="defecationExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item sound_defecation active">
+                            <img src="cover/การถ่ายอุจาระ/1.png" class="d-block w-100" alt="ขั้นตอนการถ่ายอุจาระ">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/2.png" class="d-block w-100" alt="เปิดฝาโถชักโครก">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/3.png" class="d-block w-100" alt="ถอดกางเกงชั้นนอก">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/4.png" class="d-block w-100" alt="ถอดกางเกงชั้นใน">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/5.png" class="d-block w-100" alt="เตรียมนั่งโถชักโครก">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/6.png" class="d-block w-100" alt="นั่งโถชักโครก">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/7.png" class="d-block w-100" alt="ใช้มือข้างที่ถนัดหยิบสายชำระ">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/8.png" class="d-block w-100" alt="ฉีดน้ำสายชำระล้างก้น">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/9.png" class="d-block w-100" alt="เก็บสายชำระ">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/10.png" class="d-block w-100" alt="ดึงกระดาษชำระ">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/11.png" class="d-block w-100" alt="เช็ดก้นขึ้นลง">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/12.png" class="d-block w-100" alt="ทิ้งกระดาษชำระ">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/13.png" class="d-block w-100" alt="สวมกางเกงชั้นใน">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/14.png" class="d-block w-100" alt="สวมกางเกงชั้นนอก">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/15.png" class="d-block w-100" alt="กดชักโครก">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/16.png" class="d-block w-100" alt="ปิดฝาโถชักโครก">
+                        </div>
+                        <div class="carousel-item sound_defecation">
+                            <img src="cover/การถ่ายอุจาระ/17.png" class="d-block w-100" alt="ล้างมือให้สะอาด">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/success.gif" class="d-block w-100" alt="เสร็จกิจกรรมแล้ว">
+                        </div>
+                 </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#defecationExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#defecationExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ขั้นตอนการถอดและการสวมเสื้อ -->
+<div class="modal fade" id="tshirt" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carouselModalLabel">ขั้นตอนการถอดและการสวมเสื้อ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="tshirtExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item sound_tshirt active">
+                            <img src="cover/การถอดการสวมเสื้อยืด/1.png" class="d-block w-100" alt="ขั้นตอนการถอดเสื้อและสวมเสื้อยืด">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/2.png" class="d-block w-100" alt="ใช้มือทั้งสองข้างจับชายเสื้อ">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/3.png" class="d-block w-100" alt="ดึงชายเสื้อขึ้นข้างบน">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/4.png" class="d-block w-100" alt="งอแขนขวาออกจากแขนเสื้อ">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/5.png" class="d-block w-100" alt="งอแขนซ้ายออกจากแขนเสื้อ">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/6.png" class="d-block w-100" alt="ดึงเสื้อออกจากศีรษะ">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/7.png" class="d-block w-100" alt="ดึงเสื้อออกจากตัว">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/8.png" class="d-block w-100" alt="วางเสื้อคว่ำด้านหน้าลงไว้กับโต๊ะหรือพื้น">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/9.png" class="d-block w-100" alt="รวบชายเสื้อมารวมไว้ที่คอเสื้อ">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/10.png" class="d-block w-100" alt="สมเสื้อลงบนหัวดึงลงมาถึงคอ">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/11.png" class="d-block w-100" alt="ยกแขนขวาสอดเข้าไปในแขนเสื้อขวา">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/12.png" class="d-block w-100" alt="ยกแขนซ้ายสอดเข้าไปในแขนเสื้อซ้าย">
+                        </div>
+                        <div class="carousel-item sound_tshirt">
+                            <img src="cover/การถอดการสวมเสื้อยืด/13.png" class="d-block w-100" alt="ดึงชายเสื้อลงให้สุด">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/success.gif" class="d-block w-100" alt="เสร็จกิจกรรมแล้ว">
+                        </div>
+                 </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#tshirtExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#tshirtExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- การถอดการสวมกางเกงเอวยืด -->
+<div class="modal fade" id="stretchwaisted" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carouselModalLabel">การถอดการสวมกางเกงเอวยืด</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="stretchwaistedExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item sound_stretchwaisted active">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/1.png" class="d-block w-100" alt="การถอดการสวมกางเกงเอวยืด">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/2.png" class="d-block w-100" alt="ใช้มือทั้งสองข้างจับขอบกางเกง">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/3.png" class="d-block w-100" alt="ดึงกางเกงลงมาตรงสะโพก">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/4.png" class="d-block w-100" alt="ดึงกางเกงลงมาถึงเข่า">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/5.png" class="d-block w-100" alt="นั่งบนเก้าอี้หรือบนพื้น">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/6.png" class="d-block w-100" alt="ดึงกางเกงลงมาระดับข้อเท้า">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/7.png" class="d-block w-100" alt="ยกเท้าออกจากกางเกงทีละข้าง">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/8.png" class="d-block w-100" alt="ใช้มือทั้งสองข้างจับขอบกางเกง">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/9.png" class="d-block w-100" alt="สอดขาทีละข้างออกจากกางเกง">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/10.png" class="d-block w-100" alt="ใช้มือทั้งสองข้างดึงขอบกางเกง">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/11.png" class="d-block w-100" alt="ลุกขึ้นยืน">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/12.png" class="d-block w-100" alt="ดึงขอบกางเกงขึ้นมาถึงสะโพก">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/13.png" class="d-block w-100" alt="ดึงขอบกางเกงขึ้นมาถึงเอว">
+                        </div>
+                        <div class="carousel-item sound_stretchwaisted">
+                            <img src="cover/การถอดการสวมกางเกงเอวยืด/14.png" class="d-block w-100" alt="จัดขอบกางเกงให้เรียบร้อย">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/success.gif" class="d-block w-100" alt="เสร็จกิจกรรมแล้ว">
+                        </div>
+                 </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#stretchwaistedExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#stretchwaistedExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- การถอดการสวมกางเกงเอวยืด -->
+<div class="modal fade" id="shoes" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carouselModalLabel">การถอดการสวมรองเท้า</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="shoesExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item sound_shoes active">
+                            <img src="cover/การถอดการสวมรองเท้า/1.png" class="d-block w-100" alt="การถอดการสวมรองเท้า">
+                        </div>
+                        <div class="carousel-item sound_shoes">
+                            <img src="cover/การถอดการสวมรองเท้า/2.png" class="d-block w-100" alt="ใช้มือดึงแถบที่ติดอยู่กับรองเท้าออกให้หมด">
+                        </div>
+                        <div class="carousel-item sound_shoes">
+                            <img src="cover/การถอดการสวมรองเท้า/3.png" class="d-block w-100" alt="ใช้มือทั้งสองข้างจับที่รองเท้า">
+                        </div>
+                        <div class="carousel-item sound_shoes">
+                            <img src="cover/การถอดการสวมรองเท้า/4.png" class="d-block w-100" alt="ใช้มือจับที่ส้นรองเท้าและดึงรองเท้าออก">
+                        </div>
+                        <div class="carousel-item sound_shoes">
+                            <img src="cover/การถอดการสวมรองเท้า/5.png" class="d-block w-100" alt="ดึงแถบที่ติดกับรองเท้าออก">
+                        </div>
+                        <div class="carousel-item sound_shoes">
+                            <img src="cover/การถอดการสวมรองเท้า/6.png" class="d-block w-100" alt="ใช้มือจับยกลิ้นรองเท้าขึ้น">
+                        </div>
+                        <div class="carousel-item sound_shoes">
+                            <img src="cover/การถอดการสวมรองเท้า/7.png" class="d-block w-100" alt="ยกเท้าใส่เข้าไปในรองเท้าให้สุด">
+                        </div>
+                        <div class="carousel-item sound_shoes">
+                            <img src="cover/การถอดการสวมรองเท้า/8.png" class="d-block w-100" alt="ใช้มือดึงลิ้นรองเท้า">
+                        </div>
+                        <div class="carousel-item sound_shoes">
+                            <img src="cover/การถอดการสวมรองเท้า/9.png" class="d-block w-100" alt="ติดแถบรองเท้าเข้ากับตัวยึดแถบ">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/success.gif" class="d-block w-100" alt="เสร็จกิจกรรมแล้ว">
+                        </div>
+                 </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#shoesExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#shoesExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- การรับประทานอาหารด้วยช้อน -->
+<div class="modal fade" id="spoon" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carouselModalLabel">การรับประทานอาหารด้วยช้อน</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="spoonExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item sound_spoon active">
+                            <img src="cover/การรับประทานอาหารด้วยช้อน/1.png" class="d-block w-100" alt="การรับประทานอาหารด้วยช้อน">
+                        </div>
+                        <div class="carousel-item sound_spoon">
+                            <img src="cover/การรับประทานอาหารด้วยช้อน/2.png" class="d-block w-100" alt="ใช้มือจับช้อน">
+                        </div>
+                        <div class="carousel-item sound_spoon">
+                            <img src="cover/การรับประทานอาหารด้วยช้อน/3.png" class="d-block w-100" alt="ใช้ช้อนตักอาหาร">
+                        </div>
+                        <div class="carousel-item sound_spoon">
+                            <img src="cover/การรับประทานอาหารด้วยช้อน/4.png" class="d-block w-100" alt="ยกช้อนที่มีอาหารขึ้นมาระดับอก">
+                        </div>
+                        <div class="carousel-item sound_spoon">
+                            <img src="cover/การรับประทานอาหารด้วยช้อน/5.png" class="d-block w-100" alt="นำช้อนที่มีอาหารเข้าปาก">
+                        </div>
+                        <div class="carousel-item sound_spoon">
+                            <img src="cover/การรับประทานอาหารด้วยช้อน/6.png" class="d-block w-100" alt="นำช้อนออกจากปาก">
+                        </div>
+                        <div class="carousel-item sound_spoon">
+                            <img src="cover/การรับประทานอาหารด้วยช้อน/7.png" class="d-block w-100" alt="เคี้ยวและกลืนอาหาร">
+                        </div>
+                        <div class="carousel-item sound_spoon">
+                            <img src="cover/การรับประทานอาหารด้วยช้อน/8.png" class="d-block w-100" alt="วางช้อนลงบนจานอาหาร">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/success.gif" class="d-block w-100" alt="เสร็จกิจกรรมแล้ว">
+                        </div>
+                      
+                 </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#spoonExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#spoonExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- การรับประทานอาหารด้วยมือ -->
+<div class="modal fade" id="eatingxx" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="carouselModalLabel">การรับประทานอาหารด้วยมือ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="eatingxxExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item sound_eatingxx active">
+                            <img src="cover/การรับประทานอาหารด้วยมือ/1.png" class="d-block w-100" alt="การรับประทานอาหารด้วยมือ">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/การรับประทานอาหารด้วยมือ/2.png" class="d-block w-100" alt="วางมือเตรียมหยิบอาหาร">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/การรับประทานอาหารด้วยมือ/3.png" class="d-block w-100" alt="หยิบอาหาร">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/การรับประทานอาหารด้วยมือ/4.png" class="d-block w-100" alt="ยกมือที่มีอาหารขึ้นมา">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/การรับประทานอาหารด้วยมือ/5.png" class="d-block w-100" alt="ใส่อาหารเข้าปาก">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/การรับประทานอาหารด้วยมือ/6.png" class="d-block w-100" alt="เคี้ยวและกลืนอาหาร">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/การรับประทานอาหารด้วยมือ/7.png" class="d-block w-100" alt="เอามือวางไว้ที่จานอาหาร">
+                        </div>
+                        <div class="carousel-item sound_eatingxx">
+                            <img src="cover/success.gif" class="d-block w-100" alt="เสร็จกิจกรรมแล้ว">
+                        </div>
+                      
+                 </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#eatingxxExample" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#eatingxxExample" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">โปรแกรมการสื่อสาร Visual image</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <div class="image-menu">
+            <div class="image-item" onclick="showSteps('hygiene')">
+                <img src="cover/3.png" alt="ด้านสุขอนามัย">
+                <!-- <div class="image-title">ด้านสุขอนามัย</div> -->
+            </div>
+            <div class="image-item" onclick="showSteps('toilet')">
+                <img src="cover/4.png" alt="ด้านการขับถ่าย">
+                <!-- <div class="image-title">ด้านการขับถ่าย</div> -->
+            </div>
+            <div class="image-item" onclick="showSteps('dressing')">
+                <img src="cover/5.png" alt="ด้านการแต่งกาย">
+                <!-- <div class="image-title">ด้านการแต่งกาย</div> -->
+            </div>
+            <div class="image-item" onclick="showSteps('eating')">
+                <img src="cover/6.png" alt="ด้านการรับประทานอาหาร/การดื่มน้ำ">
+                <!-- <div class="image-title">ด้านการรับประทานอาหาร/การดื่มน้ำ</div> -->
+            </div>
+        </div>
+        <div id="hygiene" class="step-container">
+            <div class="image-menu">
+                <img class="step-image" src="cover/bathing/1.png" alt="ขั้นตอนการอาบน้ำ" onclick="openCarousel(0)">
+                <img class="step-image" src="cover/teeth/1.png" alt="ขั้นตอนการแปรงฟัน" onclick="openCarousel(1)">
+                <img class="step-image" src="cover/face/1.png" alt="ขั้นตอนการล้างหน้า" onclick="openCarousel(2)">
+                <img class="step-image" src="cover/hands/1.png" alt="ขั้นตอนการล้างมือ" onclick="openCarousel(3)">
+            </div>
+            <div class="back-button">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="button" onclick="showMenu()">ย้อนกลับ</button>
+                </div>
+            </div>
+        </div>
+    
+        <div id="toilet" class="step-container">
+            <div class="image-menu">
+                <img class="step-image" src="cover/การถ่ายปัสสาวะ/1.png" alt="การถ่ายปัสสาวะ" onclick="openCarousel(4)">
+                <img class="step-image" src="cover/การถ่ายอุจาระ/1.png" alt="การถ่ายอุจาระ" onclick="openCarousel(5)">
+            </div>
+            <div class="back-button">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="button" onclick="showMenu()">ย้อนกลับ</button>
+                </div>
+            </div>
+            <!-- เพิ่มภาพขั้นตอนอื่นๆ ที่นี่ -->
+        </div>
+    
+        <div id="dressing" class="step-container">
+            <div class="image-menu">
+                <img class="step-image" src="cover/การถอดการสวมเสื้อยืด/1.png" alt="การถอดการสวมเสื้อยืด" onclick="openCarousel(6)">
+                <img class="step-image" src="cover/การถอดการสวมกางเกงเอวยืด/1.png" alt="การถอดการสวมกางเกงเอวยืด" onclick="openCarousel(7)">
+                <img class="step-image" src="cover/การถอดการสวมรองเท้า/1.png" alt="การถอดการสวมรองเท้า" onclick="openCarousel(8)">
+            </div>
+            <div class="back-button">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="button" onclick="showMenu()">ย้อนกลับ</button>
+                </div>
+            </div>
+        </div>
+    
+        <div id="eating" class="step-container">
+            <div class="image-menu">
+                <img class="step-image" src="cover/การรับประทานอาหารด้วยช้อน/1.png" alt="การรับประทานอาหารด้วยช้อน" onclick="openCarousel(10)">
+                <img class="step-image" src="cover/การรับประทานอาหารด้วยมือ/1.png" alt="การรับประทานอาหารด้วยมือ" onclick="openCarousel(9)">
+            </div>
+            <div class="back-button">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" type="button" onclick="showMenu()">ย้อนกลับ</button>
+                </div>
+            </div>
+            <!-- เพิ่มภาพขั้นตอนอื่นๆ ที่นี่ -->
+        </div>
+       
+
+       
+
+    </div>
+    </div>
+</div>
+</div>
+
+
+<script>
+    function showSteps(stepId) {
+        document.querySelector('.image-menu').style.display = 'none';
+        document.querySelectorAll('.step-container').forEach(container => container.style.display = 'none');
+        document.getElementById(stepId).style.display = 'block';
+        document.querySelector('.back-button').style.display = 'block';
+    }
+
+    function showMenu() {
+        document.querySelector('.image-menu').style.display = 'grid';
+        document.querySelectorAll('.step-container').forEach(container => container.style.display = 'none');
+        document.querySelector('.back-button').style.display = 'none';
+    }
+
+   function openCarousel(index) {
+    if(index == 0){
+        var carouselElement = document.querySelector('#carouselExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,
+            ride: false
+        });
+        carousel.to(0);
+        var carouselModal = new bootstrap.Modal(document.getElementById('carouselModal'), {});
+        carouselModal.show();
+        responsiveVoice.speak("ขั้นตอนการอาบน้ำ", "Thai Female");  // เล่นเสียง
+        carouselElement.addEventListener('slid.bs.carousel', function () {
+            var activeImageAlt = document.querySelector('.carousel-item.active img').alt;  // ดึงค่า alt ของภาพที่กำลังแสดงอยู่
+            responsiveVoice.speak(activeImageAlt, "Thai Female");  // เล่นเสียง
+        });
+      
+    }else if(index == 1){
+    var carouselElement = document.querySelector('#teethExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,
+            ride: false
+        });
+        carousel.to(0);
+        var teethModal = new bootstrap.Modal(document.getElementById('teeth'), {});
+        teethModal.show();
+        responsiveVoice.speak("ขั้นตอนการแปรงฟัน", "Thai Female");  // เล่นเสียง
+        carouselElement.addEventListener('slid.bs.carousel', function () {
+        var activeImageAlt = document.querySelector('.sound_teeth.active img').alt;  // ดึงค่า alt ของภาพที่กำลังแสดงอยู่
+        responsiveVoice.speak(activeImageAlt, "Thai Female");  // เล่นเสียง
+        });
+    }else if(index == 2){
+    var carouselElement = document.querySelector('#faceExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,
+            ride: false
+        });
+        carousel.to(0);
+        var faceModal = new bootstrap.Modal(document.getElementById('face'), {});
+        faceModal.show();
+        responsiveVoice.speak("ขั้นตอนการล้างหน้า", "Thai Female");  // เล่นเสียง
+        carouselElement.addEventListener('slid.bs.carousel', function () {
+        var activeImageAlt = document.querySelector('.sound_face.active img').alt;  // ดึงค่า alt ของภาพที่กำลังแสดงอยู่
+        responsiveVoice.speak(activeImageAlt, "Thai Female");  // เล่นเสียง
+        });
+    }else if(index == 3){
+    var carouselElement = document.querySelector('#handsExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,
+            ride: false
+        });
+        carousel.to(0);
+        var handsModal = new bootstrap.Modal(document.getElementById('hands'), {});
+        handsModal.show();
+        responsiveVoice.speak("ขั้นตอนการล้างมือ", "Thai Female");  // เล่นเสียง
+        carouselElement.addEventListener('slid.bs.carousel', function () {
+        var activeImageAlt = document.querySelector('.sound_hands.active img').alt;  // ดึงค่า alt ของภาพที่กำลังแสดงอยู่
+        responsiveVoice.speak(activeImageAlt, "Thai Female");  // เล่นเสียง
+        });
+    }else if(index == 4){
+    var carouselElement = document.querySelector('#urinationExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,
+            ride: false
+        });
+        carousel.to(0);
+        var urinationModal = new bootstrap.Modal(document.getElementById('urination'), {});
+        urinationModal.show();
+        responsiveVoice.speak("ขั้นตอนการถ่ายปัสสาวะ", "Thai Female");  // เล่นเสียง
+        carouselElement.addEventListener('slid.bs.carousel', function () {
+        var activeImageAlt = document.querySelector('.sound_urination.active img').alt;  // ดึงค่า alt ของภาพที่กำลังแสดงอยู่
+        responsiveVoice.speak(activeImageAlt, "Thai Female");  // เล่นเสียง
+        });
+    }else if(index == 5){
+    var carouselElement = document.querySelector('#defecationExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,
+            ride: false
+        });
+        carousel.to(0);
+        var defecationModal = new bootstrap.Modal(document.getElementById('defecation'), {});
+        defecationModal.show();
+        responsiveVoice.speak("ขั้นตอนการถ่ายอุจจาระ", "Thai Female");  // เล่นเสียง
+        carouselElement.addEventListener('slid.bs.carousel', function () {
+        var activeImageAlt = document.querySelector('.sound_defecation.active img').alt;  // ดึงค่า alt ของภาพที่กำลังแสดงอยู่
+        responsiveVoice.speak(activeImageAlt, "Thai Female");  // เล่นเสียง
+        });
+    }else if(index == 6){
+    var carouselElement = document.querySelector('#tshirtExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,
+            ride: false
+        });
+        carousel.to(0);
+        var tshirtModal = new bootstrap.Modal(document.getElementById('tshirt'), {});
+        tshirtModal.show();
+        responsiveVoice.speak("ขั้นตอนการถอดเสื้อและสวมเสื้อยืด", "Thai Female");  // เล่นเสียง
+        carouselElement.addEventListener('slid.bs.carousel', function () {
+        var activeImageAlt = document.querySelector('.sound_tshirt.active img').alt;  // ดึงค่า alt ของภาพที่กำลังแสดงอยู่
+        responsiveVoice.speak(activeImageAlt, "Thai Female");  // เล่นเสียง
+        });
+    }else if(index == 7){
+    var carouselElement = document.querySelector('#stretchwaistedExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,
+            ride: false
+        });
+        carousel.to(0);
+        var stretchwaistedModal = new bootstrap.Modal(document.getElementById('stretchwaisted'), {});
+        stretchwaistedModal.show();
+        responsiveVoice.speak("ขั้นตอนการถอดการสวมกางเกงเอวยืด", "Thai Female");  // เล่นเสียง
+        carouselElement.addEventListener('slid.bs.carousel', function () {
+        var activeImageAlt = document.querySelector('.sound_stretchwaisted.active img').alt;  // ดึงค่า alt ของภาพที่กำลังแสดงอยู่
+        responsiveVoice.speak(activeImageAlt, "Thai Female");  // เล่นเสียง
+        });
+    }else if(index == 8){
+    var carouselElement = document.querySelector('#shoesExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,
+            ride: false
+        });
+        carousel.to(0);
+        var shoesModal = new bootstrap.Modal(document.getElementById('shoes'), {});
+        shoesModal.show();
+        responsiveVoice.speak("ขั้นตอนการถอดการสวมรองเท้า", "Thai Female");  // เล่นเสียง
+        carouselElement.addEventListener('slid.bs.carousel', function () {
+        var activeImageAlt = document.querySelector('.sound_shoes.active img').alt;  // ดึงค่า alt ของภาพที่กำลังแสดงอยู่
+        responsiveVoice.speak(activeImageAlt, "Thai Female");  // เล่นเสียง
+        });
+    }else if(index == 9){
+    var carouselElement = document.querySelector('#eatingxxExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,
+            ride: false
+        });
+        carousel.to(0);
+        var eatingxxModal = new bootstrap.Modal(document.getElementById('eatingxx'), {});
+        eatingxxModal.show();
+        responsiveVoice.speak("ขั้นตอนการรับประทานอาหารด้วยมือ", "Thai Female");  // เล่นเสียง
+        carouselElement.addEventListener('slid.bs.carousel', function () {
+        var activeImageAlt = document.querySelector('.sound_eatingxx.active img').alt;  // ดึงค่า alt ของภาพที่กำลังแสดงอยู่
+        responsiveVoice.speak(activeImageAlt, "Thai Female");  // เล่นเสียง
+        });
+    }else if(index == 10){
+    var carouselElement = document.querySelector('#spoonExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,
+            ride: false
+        });
+        carousel.to(0);
+        var spoonModal = new bootstrap.Modal(document.getElementById('spoon'), {});
+        spoonModal.show();
+        responsiveVoice.speak("ขั้นตอนการรับประทานอาหารด้วยช้อน", "Thai Female");  // เล่นเสียง
+        carouselElement.addEventListener('slid.bs.carousel', function () {
+        var activeImageAlt = document.querySelector('.sound_spoon.active img').alt;  // ดึงค่า alt ของภาพที่กำลังแสดงอยู่
+        responsiveVoice.speak(activeImageAlt, "Thai Female");  // เล่นเสียง
+        });
+    }
+    
+    $('#exampleModal').modal('hide');
+    }
+
+    
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var carouselElement = document.querySelector('#carouselExample');
+        var carousel = new bootstrap.Carousel(carouselElement, {
+            interval: false,  // ไม่ใช้การสไลด์อัตโนมัติ
+        });
+
+       
+    });
+
+
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
